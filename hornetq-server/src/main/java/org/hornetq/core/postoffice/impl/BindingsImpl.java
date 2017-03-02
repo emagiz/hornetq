@@ -54,7 +54,7 @@ public final class BindingsImpl implements Bindings
 
    private static final String FORWARD_WHEN_NO_CONSUMERS = "activate.correct.semantics.for.forward.when.no.consumers";
 
-   private static final boolean isForwardWhenNoConsumers = Boolean.parseBoolean(System.getProperty(BindingsImpl.FORWARD_WHEN_NO_CONSUMERS,"false"));
+   private static final boolean isForwardWhenNoConsumers = findForwardWhenNoConsumersSettings();
 
    private final ConcurrentMap<SimpleString, List<Binding>> routingNameBindingMap = new ConcurrentHashMap<SimpleString, List<Binding>>();
 
@@ -77,6 +77,23 @@ public final class BindingsImpl implements Bindings
       this.groupingHandler = groupingHandler;
       this.pageStore = pageStore;
       this.name = name;
+   }
+
+   public static boolean findForwardWhenNoConsumersSettings()
+   {
+      boolean isForwardWhenNoConsumers = false;
+
+      try
+      {
+         isForwardWhenNoConsumers = Boolean.parseBoolean(System.getProperty(BindingsImpl.FORWARD_WHEN_NO_CONSUMERS,"false"));
+      }
+      catch (Exception anException)
+      {
+         //Don't know how to handle this right now
+         //HornetQServerLogger.LOGGER.warn("Could not fetch settings " + BindingsImpl.FORWARD_WHEN_NO_CONSUMERS + " assuming it the default: false");
+      }
+
+      return isForwardWhenNoConsumers;
    }
 
    public void setRouteWhenNoConsumers(final boolean routeWhenNoConsumers)

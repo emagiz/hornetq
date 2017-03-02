@@ -550,15 +550,15 @@ public final class HornetQDefaultConfiguration
    private static String DEFAULT_CLUSTER_PASSWORD = "CHANGE ME!!";
    private static int DEFAULT_MAX_SAVED_REPLICATED_JOURNALS_SIZE = 2;
 
-   private static boolean DEFAULT_ENFORCE_MAX_REPLICA;
+   private static boolean DEFAULT_ENFORCE_MAX_REPLICA = true;
 
    public static String DEFAULT_NETWORK_CHECK_LIST;
 
    public static String DEFAULT_NETWORK_CHECK_URL_LIST;
 
-   public static long DEFAULT_NETWORK_CHECK_PERIOD;
+   public static long DEFAULT_NETWORK_CHECK_PERIOD = 5000;
 
-   public static int DEFAULT_NETWORK_CHECK_TIMEOUT;
+   public static int DEFAULT_NETWORK_CHECK_TIMEOUT = 1000;
 
    public static String DEFAULT_NETWORK_CHECK_NIC;
 

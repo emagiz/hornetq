@@ -77,23 +77,39 @@ public final class GroupingHandlerConfiguration implements Serializable
       this.name = name;
       this.address = address;
       this.timeout = timeout;
-      if (System.getProperty(GROUP_TIMEOUT_PROP_NAME) != null)
+      if (findSystemProperty(GROUP_TIMEOUT_PROP_NAME) != null)
       {
-         this.groupTimeout = Long.parseLong(System.getProperty(GROUP_TIMEOUT_PROP_NAME));
+         this.groupTimeout = Long.parseLong(findSystemProperty(GROUP_TIMEOUT_PROP_NAME));
       }
       else
       {
          this.groupTimeout = groupTimeout;
       }
 
-      if (System.getProperty(REAPER_PERIOD_PROP_NAME) != null)
+      if (findSystemProperty(REAPER_PERIOD_PROP_NAME) != null)
       {
-         this.reaperPeriod = Long.parseLong(System.getProperty(REAPER_PERIOD_PROP_NAME));
+         this.reaperPeriod = Long.parseLong(findSystemProperty(REAPER_PERIOD_PROP_NAME));
       }
       else
       {
          this.reaperPeriod = reaperPeriod;
       }
+   }
+
+   private String findSystemProperty(String key)
+   {
+      String returnValue = null;
+
+      try
+      {
+         returnValue = System.getProperty(key);
+      }
+      catch (Exception e)
+      {
+         // Just ignore this
+      }
+
+      return returnValue;
    }
 
    public SimpleString getName()

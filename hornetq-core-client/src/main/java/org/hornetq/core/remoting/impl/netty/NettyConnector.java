@@ -445,52 +445,52 @@ public class NettyConnector extends AbstractConnector
             String realKeyStorePath = keyStorePath;
             String realKeyStoreProvider = keyStoreProvider;
             String realKeyStorePassword = keyStorePassword;
-            if (System.getProperty(JAVAX_KEYSTORE_PATH_PROP_NAME) != null)
+            if (findSystemProperty(JAVAX_KEYSTORE_PATH_PROP_NAME) != null)
             {
-               realKeyStorePath = System.getProperty(JAVAX_KEYSTORE_PATH_PROP_NAME);
+               realKeyStorePath = findSystemProperty(JAVAX_KEYSTORE_PATH_PROP_NAME);
             }
-            if (System.getProperty(JAVAX_KEYSTORE_PASSWORD_PROP_NAME) != null)
+            if (findSystemProperty(JAVAX_KEYSTORE_PASSWORD_PROP_NAME) != null)
             {
-               realKeyStorePassword = System.getProperty(JAVAX_KEYSTORE_PASSWORD_PROP_NAME);
+               realKeyStorePassword = findSystemProperty(JAVAX_KEYSTORE_PASSWORD_PROP_NAME);
             }
-            if (System.getProperty(HORNETQ_KEYSTORE_PROVIDER_PROP_NAME) != null)
+            if (findSystemProperty(HORNETQ_KEYSTORE_PROVIDER_PROP_NAME) != null)
             {
-               realKeyStoreProvider = System.getProperty(HORNETQ_KEYSTORE_PROVIDER_PROP_NAME);
+               realKeyStoreProvider = findSystemProperty(HORNETQ_KEYSTORE_PROVIDER_PROP_NAME);
             }
-            if (System.getProperty(HORNETQ_KEYSTORE_PASSWORD_PROP_NAME) != null)
+            if (findSystemProperty(HORNETQ_KEYSTORE_PASSWORD_PROP_NAME) != null)
             {
-               realKeyStorePassword = System.getProperty(HORNETQ_KEYSTORE_PASSWORD_PROP_NAME);
+               realKeyStorePassword = findSystemProperty(HORNETQ_KEYSTORE_PASSWORD_PROP_NAME);
             }
 
-            if (System.getProperty(HORNETQ_KEYSTORE_PATH_PROP_NAME) != null)
+            if (findSystemProperty(HORNETQ_KEYSTORE_PATH_PROP_NAME) != null)
             {
-               realKeyStorePath = System.getProperty(HORNETQ_KEYSTORE_PATH_PROP_NAME);
+               realKeyStorePath = findSystemProperty(HORNETQ_KEYSTORE_PATH_PROP_NAME);
             }
 
             String realTrustStorePath = trustStorePath;
             String realTrustStoreProvider = trustStoreProvider;
             String realTrustStorePassword = trustStorePassword;
-            if (System.getProperty(JAVAX_TRUSTSTORE_PATH_PROP_NAME) != null)
+            if (findSystemProperty(JAVAX_TRUSTSTORE_PATH_PROP_NAME) != null)
             {
-               realTrustStorePath = System.getProperty(JAVAX_TRUSTSTORE_PATH_PROP_NAME);
+               realTrustStorePath = findSystemProperty(JAVAX_TRUSTSTORE_PATH_PROP_NAME);
             }
-            if (System.getProperty(JAVAX_TRUSTSTORE_PASSWORD_PROP_NAME) != null)
+            if (findSystemProperty(JAVAX_TRUSTSTORE_PASSWORD_PROP_NAME) != null)
             {
-               realTrustStorePassword = System.getProperty(JAVAX_TRUSTSTORE_PASSWORD_PROP_NAME);
-            }
-
-            if (System.getProperty(HORNETQ_TRUSTSTORE_PROVIDER_PROP_NAME) != null)
-            {
-               realTrustStoreProvider = System.getProperty(HORNETQ_TRUSTSTORE_PROVIDER_PROP_NAME);
+               realTrustStorePassword = findSystemProperty(JAVAX_TRUSTSTORE_PASSWORD_PROP_NAME);
             }
 
-            if (System.getProperty(HORNETQ_TRUSTSTORE_PATH_PROP_NAME) != null)
+            if (findSystemProperty(HORNETQ_TRUSTSTORE_PROVIDER_PROP_NAME) != null)
             {
-               realTrustStorePath = System.getProperty(HORNETQ_TRUSTSTORE_PATH_PROP_NAME);
+               realTrustStoreProvider = findSystemProperty(HORNETQ_TRUSTSTORE_PROVIDER_PROP_NAME);
             }
-            if (System.getProperty(HORNETQ_TRUSTSTORE_PASSWORD_PROP_NAME) != null)
+
+            if (findSystemProperty(HORNETQ_TRUSTSTORE_PATH_PROP_NAME) != null)
             {
-               realTrustStorePassword = System.getProperty(HORNETQ_TRUSTSTORE_PASSWORD_PROP_NAME);
+               realTrustStorePath = findSystemProperty(HORNETQ_TRUSTSTORE_PATH_PROP_NAME);
+            }
+            if (findSystemProperty(HORNETQ_TRUSTSTORE_PASSWORD_PROP_NAME) != null)
+            {
+               realTrustStorePassword = findSystemProperty(HORNETQ_TRUSTSTORE_PASSWORD_PROP_NAME);
             }
 
             context = SSLSupport.createContext(realKeyStoreProvider, realKeyStorePath, realKeyStorePassword, realTrustStoreProvider, realTrustStorePath, realTrustStorePassword);
@@ -561,6 +561,22 @@ public class NettyConnector extends AbstractConnector
       }
 
       HornetQClientLogger.LOGGER.debug("Started Netty Connector version " + Version.ID);
+   }
+
+   private String findSystemProperty(String key)
+   {
+      String returnValue = null;
+
+      try
+      {
+         returnValue = System.getProperty(key);
+      }
+      catch (Exception e)
+      {
+         // Just ignore this
+      }
+
+      return returnValue;
    }
 
    public synchronized void close()
